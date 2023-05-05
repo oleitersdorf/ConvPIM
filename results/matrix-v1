@@ -1,0 +1,4 @@
+Tested n=32 with torch.float32: 287.0W and 37.92s
+Tested n=128 with torch.float32: 300.0W and 2.83s
+Tested n=512 with torch.float32: 299.0W and 1.93s
+Tested n=2048 with torch.float32: 299.0W and 1.98s

@@ -1,0 +1,8 @@
+Tested add with torch.int16: 293.0W and 9.63s
+Tested add with torch.int32: 299.0W and 19.16s
+Tested add with torch.float16: 299.0W and 9.65s
+Tested add with torch.float32: 299.0W and 19.16s
+Tested mul with torch.int16: 299.0W and 9.66s
+Tested mul with torch.int32: 299.0W and 19.16s
+Tested mul with torch.float16: 299.0W and 9.66s
+Tested mul with torch.float32: 294.0W and 19.16s

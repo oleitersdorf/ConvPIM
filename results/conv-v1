@@ -1,0 +1,5 @@
+Tested k=1 with torch.float32: 291.0W and 3.15s
+Tested k=3 with torch.float32: 299.0W and 2.84s
+Tested k=5 with torch.float32: 299.0W and 8.79s
+Tested k=7 with torch.float32: 299.0W and 14.18s
+Tested k=9 with torch.float32: 299.0W and 20.71s

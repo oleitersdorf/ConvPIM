@@ -13,6 +13,7 @@ from pynvml.smi import nvidia_smi
 parser = argparse.ArgumentParser()
 parser.add_argument("--bs-train", help="batch size for training", type=int, default=512)
 parser.add_argument("--bs-valid", help="batch size for validation", type=int, default=512)
+parser.add_argument("--half", help="use half-precision floating-point", action='store_true')
 parser.add_argument("-N", "--num-iterations", help="the number of iterations", type=int, default=128)
 parser.add_argument("--power-samples", help="the number of power samples per experiment", type=int, default=100)
 args = parser.parse_args()
@@ -35,7 +36,7 @@ def testInference(model, output):
     """
 
     # Generate random input
-    x = torch.rand(args.bs_valid, D, W, H, device=device)
+    x = torch.rand(args.bs_valid, D, W, H, device=device, dtype=torch.float16 if args.half else torch.float32)
     torch.cuda.synchronize()
 
     nvtx.range_push(f'Testing inference with {model.__class__.__name__}')
@@ -117,15 +118,24 @@ if __name__ == '__main__':
     torch.backends.cudnn.allow_tf32 = False
     
     model = models.alexnet(weights=models.AlexNet_Weights.DEFAULT).to(device=device)
-    testInference(model, output) # 724705896 MACs
-    testTraining(model, output) # 3332131161 MACs
+    if args.half:
+        model = model.half()
+    testInference(model, output)  # 724705896 MACs
+    if not args.half:
+        testTraining(model, output)  # 3332131161 MACs
     
     model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT).to(device=device)
-    testInference(model, output) # 4297355192 MACs
-    testTraining(model, output) # 12822701741 MACs
+    if args.half:
+        model = model.half()
+    testInference(model, output)  # 4297355192 MACs
+    if not args.half:
+        testTraining(model, output)  # 12822701741 MACs
         
     model = models.googlenet(weights=models.GoogLeNet_Weights.DEFAULT).to(device=device)
-    testInference(model, output) # 1255899984 MACs
-    testTraining(model, output) # 4042532867 MACs
+    if args.half:
+        model = model.half()
+    testInference(model, output)  # 1255899984 MACs
+    if not args.half:
+        testTraining(model, output)  # 4042532867 MACs
 
     output.close()

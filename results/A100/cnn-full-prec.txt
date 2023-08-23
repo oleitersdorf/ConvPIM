@@ -1,0 +1,6 @@
+Testing inference with AlexNet: 281.0W and 3.83s
+Testing training with AlexNet: 285.0W and 9.25s
+Testing inference with ResNet: 290.0W and 39.76s
+Testing training with ResNet: 287.0W and 133.28s
+Testing inference with GoogLeNet: 300.0W and 14.2s
+Testing training with GoogLeNet: 285.0W and 52.69s
